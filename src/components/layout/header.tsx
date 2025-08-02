@@ -22,7 +22,7 @@ export default function Header() {
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold">
           <Wind className="h-6 w-6" />
-          <span className="font-bold">AtelierFlow</span>
+          <span className="font-bold">SajFlow</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           {navLinks.map((link) => (
@@ -61,7 +61,7 @@ export default function Header() {
                 <div className="flex justify-between items-center pb-6">
                    <Link href="/" className="flex items-center gap-2 font-bold" onClick={() => setMenuOpen(false)}>
                     <Wind className="h-6 w-6" />
-                    <span className="font-bold">AtelierFlow</span>
+                    <span className="font-bold">SajFlow</span>
                   </Link>
                    <Button variant="ghost" size="icon" onClick={() => setMenuOpen(false)}>
                       <X className="h-6 w-6" />

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { ProjectDetail } from './project-detail';
 import { Badge } from '../ui/badge';
 
@@ -87,7 +87,12 @@ export default function Portfolio() {
 
         <Dialog open={!!selectedProject} onOpenChange={(isOpen) => !isOpen && setSelectedProject(null)}>
           <DialogContent className="max-w-4xl w-[90vw] h-[90vh] p-0">
-            {selectedProject && <ProjectDetail project={selectedProject} />}
+             {selectedProject && (
+              <>
+                <DialogTitle className="sr-only">{selectedProject.title}</DialogTitle>
+                <ProjectDetail project={selectedProject} />
+              </>
+            )}
           </DialogContent>
         </Dialog>
       </div>

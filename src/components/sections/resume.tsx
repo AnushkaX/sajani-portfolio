@@ -26,7 +26,7 @@ export default function Resume() {
                 A brief look at my qualifications, experience, and the skills I bring to the table.
             </p>
             <Button asChild className="mt-6">
-                <a href="/placeholder-cv.pdf" download="Alexia_Dubois_CV.pdf">
+                <a href="/placeholder-cv.pdf" download="Sajani_Muthusinghe_CV.pdf">
                 <Download className="mr-2 h-4 w-4" />
                 Download Full CV
                 </a>

@@ -10,7 +10,7 @@ export default function About() {
             <Badge>About Me</Badge>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">A Story in Every Stitch</h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              I'm Alexia Dubois, a passionate and innovative fashion design student with a keen eye for detail and a love for storytelling through textiles. My work explores the intersection of classic tailoring and modern, sustainable practices.
+              I'm Sajani Muthusinghe, a passionate and innovative fashion design student with a keen eye for detail and a love for storytelling through textiles. My work explores the intersection of classic tailoring and modern, sustainable practices.
             </p>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               I believe fashion is a form of wearable art that should not only be aesthetically pleasing but also evoke emotion and reflect individuality. My design process is deeply rooted in research, experimentation with unconventional materials, and a commitment to creating timeless pieces that empower the wearer.
@@ -19,7 +19,7 @@ export default function About() {
           <div className="flex items-center justify-center">
             <Image
               src="https://placehold.co/550x550.png"
-              alt="Portrait of Alexia Dubois"
+              alt="Portrait of Sajani Muthusinghe"
               data-ai-hint="fashion designer portrait"
               width={550}
               height={550}

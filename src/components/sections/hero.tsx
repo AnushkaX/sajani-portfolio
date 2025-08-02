@@ -17,7 +17,7 @@ export default function Hero() {
       />
       <div className="relative z-20 flex h-full flex-col items-center justify-center text-center text-white px-4">
         <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-          Alexia Dubois
+          Sajani Muthusinghe
         </h1>
         <p className="mt-4 max-w-xl text-lg text-primary-foreground/80 md:text-xl">
           An innovative fashion designer crafting narratives through sustainable and avant-garde collections.

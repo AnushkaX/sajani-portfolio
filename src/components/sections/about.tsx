@@ -7,7 +7,7 @@ export default function About() {
       <div className="container">
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">About Me</h2>
         <Card className="overflow-hidden">
-          <div className="grid md:grid-cols-5 gap-8 items-center">
+          <div className="grid md:grid-cols-5 gap-0 md:gap-8 items-center">
             <div className="md:col-span-2">
               <Image
                 src="https://placehold.co/400x500.png"
@@ -18,8 +18,8 @@ export default function About() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="md:col-span-3 p-8 md:p-0">
-              <CardContent className="space-y-6 pt-6">
+            <div className="md:col-span-3">
+              <CardContent className="space-y-6 pt-6 p-8">
                 <div>
                   <h3 className="text-2xl font-headline text-primary mb-2">Alexia Dubois</h3>
                   <p className="text-muted-foreground leading-relaxed">

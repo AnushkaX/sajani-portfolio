@@ -7,12 +7,13 @@ import { useToast } from "@/hooks/use-toast";
 import { handleContactSubmit } from "@/app/actions";
 import { contactFormSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Instagram, Linkedin } from "lucide-react";
 import { BehanceIcon } from "@/components/icons/behance-icon";
+import { Badge } from "../ui/badge";
 
 export default function Contact() {
   const { toast } = useToast();
@@ -48,15 +49,16 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-secondary">
+    <section id="contact" className="py-16 md:py-24 lg:py-32 bg-secondary">
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-headline mb-4">Get In Touch</h2>
-          <p className="text-muted-foreground mb-8">
+            <Badge>Contact</Badge>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mt-4">Get In Touch</h2>
+          <p className="text-muted-foreground mt-4 mb-8">
             Have a question, a project proposal, or just want to say hello? I'd love to hear from you.
           </p>
         </div>
-        <Card className="max-w-3xl mx-auto">
+        <Card className="max-w-xl mx-auto">
           <CardContent className="p-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -106,13 +108,13 @@ export default function Contact() {
             </Form>
             <div className="mt-8 flex justify-center space-x-6">
                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors">
-                 <Instagram className="h-7 w-7" />
+                 <Instagram className="h-6 w-6" />
                </a>
                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors">
-                 <Linkedin className="h-7 w-7" />
+                 <Linkedin className="h-6 w-6" />
                </a>
                <a href="https://behance.net" target="_blank" rel="noopener noreferrer" aria-label="Behance" className="text-muted-foreground hover:text-primary transition-colors">
-                 <BehanceIcon className="h-7 w-7" />
+                 <BehanceIcon className="h-6 w-6" />
                </a>
             </div>
           </CardContent>

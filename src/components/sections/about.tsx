@@ -1,41 +1,32 @@
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function About() {
   return (
-    <section id="about" className="py-16 md:py-24">
-      <div className="container">
-        <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">About Me</h2>
-        <Card className="overflow-hidden">
-          <div className="grid md:grid-cols-5 gap-0 md:gap-8 items-center">
-            <div className="md:col-span-2">
-              <Image
-                src="https://placehold.co/400x500.png"
-                alt="Portrait of Alexia Dubois"
-                data-ai-hint="fashion designer portrait"
-                width={400}
-                height={500}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="md:col-span-3">
-              <CardContent className="space-y-6 pt-6 p-8">
-                <div>
-                  <h3 className="text-2xl font-headline text-primary mb-2">Alexia Dubois</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    A passionate and innovative fashion design student with a keen eye for detail and a love for storytelling through textiles. My work explores the intersection of classic tailoring and modern, sustainable practices.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-headline text-primary mb-2">Design Philosophy</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    I believe fashion is a form of wearable art that should not only be aesthetically pleasing but also evoke emotion and reflect individuality. My design process is deeply rooted in research, experimentation with unconventional materials, and a commitment to creating timeless pieces that empower the wearer.
-                  </p>
-                </div>
-              </CardContent>
-            </div>
+    <section id="about" className="py-16 md:py-24 lg:py-32">
+      <div className="container px-4 md:px-6">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="space-y-4">
+            <Badge>About Me</Badge>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">A Story in Every Stitch</h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              I'm Alexia Dubois, a passionate and innovative fashion design student with a keen eye for detail and a love for storytelling through textiles. My work explores the intersection of classic tailoring and modern, sustainable practices.
+            </p>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              I believe fashion is a form of wearable art that should not only be aesthetically pleasing but also evoke emotion and reflect individuality. My design process is deeply rooted in research, experimentation with unconventional materials, and a commitment to creating timeless pieces that empower the wearer.
+            </p>
           </div>
-        </Card>
+          <div className="flex items-center justify-center">
+            <Image
+              src="https://placehold.co/550x550.png"
+              alt="Portrait of Alexia Dubois"
+              data-ai-hint="fashion designer portrait"
+              width={550}
+              height={550}
+              className="rounded-full object-cover w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px]"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ProjectDetail } from './project-detail';
+import { Badge } from '../ui/badge';
 
 type Project = {
   id: number;
@@ -38,10 +39,16 @@ export default function Portfolio() {
         {filteredProjects.map((project) => (
           <Card 
             key={project.id} 
-            className="overflow-hidden cursor-pointer group"
+            className="overflow-hidden cursor-pointer group border-0 rounded-lg"
             onClick={() => setSelectedProject(project)}
           >
-            <CardContent className="p-0">
+            <CardContent className="p-0 relative">
+              <div className="absolute inset-0 bg-black/50 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-center p-4">
+                <div className="text-white">
+                  <h3 className="font-bold text-lg">{project.title}</h3>
+                  <p className="text-sm">{project.category}</p>
+                </div>
+              </div>
               <div className="aspect-[3/4] overflow-hidden">
                 <Image
                   src={project.coverImage}
@@ -53,12 +60,6 @@ export default function Portfolio() {
                 />
               </div>
             </CardContent>
-            <CardFooter className="p-4 bg-background">
-              <div>
-                <h3 className="font-headline text-lg text-primary">{project.title}</h3>
-                <p className="text-sm text-muted-foreground">{project.category}</p>
-              </div>
-            </CardFooter>
           </Card>
         ))}
       </div>
@@ -66,9 +67,15 @@ export default function Portfolio() {
   };
 
   return (
-    <section id="portfolio" className="py-16 md:py-24 bg-secondary">
+    <section id="portfolio" className="py-16 md:py-24 lg:py-32 bg-secondary">
       <div className="container">
-        <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">Portfolio</h2>
+        <div className="flex flex-col items-center text-center mb-12">
+            <Badge>Portfolio</Badge>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mt-4">My Collections</h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+                A selection of my work, from runway-ready pieces to the sketches that started them all.
+            </p>
+        </div>
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mx-auto max-w-lg mb-8">
             <TabsTrigger value="all">All</TabsTrigger>

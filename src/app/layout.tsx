@@ -1,11 +1,18 @@
 import type { Metadata } from 'next';
 import { Toaster } from "@/components/ui/toaster"
+import { Inter as FontSans } from "next/font/google"
 import './globals.css';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'AtelierFlow',
   description: 'Portfolio for an emerging fashion designer.',
 };
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export default function RootLayout({
   children,
@@ -13,13 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Belleza&display=swap" rel="stylesheet" />
-      </head>
-      <body className="font-body bg-background text-foreground antialiased">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}>
         {children}
         <Toaster />
       </body>

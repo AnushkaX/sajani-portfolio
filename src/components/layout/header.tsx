@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Instagram, Linkedin } from 'lucide-react';
+import { Menu, X, Instagram, Linkedin, Wind } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { BehanceIcon } from '@/components/icons/behance-icon';
@@ -19,13 +19,14 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="font-headline text-xl font-bold text-primary">
-          AtelierFlow
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 font-bold">
+          <Wind className="h-6 w-6" />
+          <span className="font-bold">AtelierFlow</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="transition-colors hover:text-primary">
+            <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground/80 text-foreground/60">
               {link.label}
             </Link>
           ))}
@@ -56,17 +57,18 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[80vw]">
-              <div className="flex flex-col h-full text-center">
+              <div className="flex flex-col h-full">
                 <div className="flex justify-between items-center pb-6">
-                   <Link href="/" className="font-headline text-xl font-bold text-primary" onClick={() => setMenuOpen(false)}>
-                    AtelierFlow
+                   <Link href="/" className="flex items-center gap-2 font-bold" onClick={() => setMenuOpen(false)}>
+                    <Wind className="h-6 w-6" />
+                    <span className="font-bold">AtelierFlow</span>
                   </Link>
                    <Button variant="ghost" size="icon" onClick={() => setMenuOpen(false)}>
                       <X className="h-6 w-6" />
                       <span className="sr-only">Close menu</span>
                    </Button>
                 </div>
-                <nav className="flex flex-col space-y-4">
+                <nav className="flex flex-col space-y-4 items-center">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}

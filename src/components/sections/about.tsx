@@ -18,7 +18,7 @@ export default function About() {
           </div>
           <div className="flex items-center justify-center">
             <Image
-              src="https://placehold.co/550x550.png"
+              src="https://scontent.fcmb2-2.fna.fbcdn.net/v/t39.30808-6/492224889_122158093724498058_9133456131604945616_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEn2L35xGBgF4AOHgu2dSGRRZPa-hi80oNFk9r6GLzSg7doL9YL1vH6MpFTvK0Qb3gwjecg6r1BpXAJdUW1v8jC&_nc_ohc=0sXGKvxejKcQ7kNvwGDkr6i&_nc_oc=AdlPMlgVWNI2YFIy-hAqcA_-loN-KPdReIB7-w7eSBQulVhLvbY93qYMFNfYZqyJqJg&_nc_zt=23&_nc_ht=scontent.fcmb2-2.fna&_nc_gid=RBDJ2DI9Jg-k-5GWnWm8dw&oh=00_AfR-A0WaI8x4bM-t1VCyKyW8vELfT7UsvKen80REbErqAg&oe=6893E8FD"
               alt="Portrait of Sajani Muthusinghe"
               data-ai-hint="fashion designer portrait"
               width={550}

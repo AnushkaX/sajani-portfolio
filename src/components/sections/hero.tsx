@@ -8,7 +8,7 @@ export default function Hero() {
     <section id="home" className="relative h-screen w-full flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50 z-10" />
       <Image
-        src="https://placehold.co/1920x1080.png"
+        src="https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?cs=srgb&dl=pexels-bohlemedia-1884584.jpg&fm=jpg"
         alt="Featured fashion design"
         data-ai-hint="fashion runway model"
         fill

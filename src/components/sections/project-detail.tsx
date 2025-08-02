@@ -3,16 +3,7 @@
 import Image from 'next/image';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ScrollArea } from '@/components/ui/scroll-area';
-
-type Project = {
-  id: number;
-  title: string;
-  category: 'Haute Couture' | 'Casual' | 'Sketches';
-  date: string;
-  description: string;
-  coverImage: string;
-  images: string[];
-};
+import { type Project } from '@/lib/projects';
 
 interface ProjectDetailProps {
   project: Project;

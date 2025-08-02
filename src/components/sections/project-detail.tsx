@@ -27,7 +27,7 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             {project.images.map((image, index) => (
               <CarouselItem key={index}>
                 <div className="aspect-square relative">
-                  <Image src={image} alt={`${project.title} - Image ${index + 1}`} fill className="object-contain" />
+                  <Image src={image} alt={`${project.title} - Image ${index + 1}`} fill sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw" className="object-contain" />
                 </div>
               </CarouselItem>
             ))}

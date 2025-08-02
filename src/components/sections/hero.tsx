@@ -12,6 +12,7 @@ export default function Hero() {
         alt="Featured fashion design"
         data-ai-hint="fashion runway model"
         fill
+        sizes="100vw"
         className="object-cover"
         priority
       />

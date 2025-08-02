@@ -56,7 +56,7 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[80vw]">
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col h-full text-center">
                 <div className="flex justify-between items-center pb-6">
                    <Link href="/" className="font-headline text-xl font-bold text-primary" onClick={() => setMenuOpen(false)}>
                     AtelierFlow

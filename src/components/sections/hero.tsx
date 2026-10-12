@@ -1,42 +1,43 @@
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowDown } from 'lucide-react';
+import { SafeImage } from '@/components/ui/safe-image';
+import type { SiteContent } from '@/lib/site-content';
 
-export default function Hero() {
+export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50 z-10" />
-      <Image
-        src="https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?cs=srgb&dl=pexels-bohlemedia-1884584.jpg&fm=jpg"
-        alt="Featured fashion design"
-        data-ai-hint="fashion runway model"
+    <section id="home" className="relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden sm:items-center">
+      <SafeImage
+        src={hero.image}
+        alt={hero.name}
         fill
         sizes="100vw"
-        className="object-cover"
         priority
+        className="animate-kenburns object-cover object-[center_20%]"
       />
-      <div className="relative z-20 flex h-full flex-col items-center justify-center text-center text-white px-4">
-        <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-          Sajani Muthusinghe
-        </h1>
-        <p className="mt-4 max-w-xl text-lg text-primary-foreground/80 md:text-xl">
-          An innovative fashion designer crafting narratives through sustainable and avant-garde collections.
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Link href="#portfolio">View My Work</Link>
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/75 via-black/35 to-black/25" />
+      <div className="relative z-20 w-full px-6 pb-24 sm:px-10 md:px-16">
+        <div className="mx-auto max-w-screen-2xl">
+          <p className="animate-fade-up text-xs uppercase tracking-[0.42em] text-white/80">{hero.eyebrow}</p>
+          <h1 className="animate-fade-up mt-4 max-w-4xl text-5xl leading-[0.95] tracking-wide text-white sm:text-7xl lg:text-8xl" style={{ animationDelay: '120ms' }}>
+            {hero.name}
+          </h1>
+          <p className="animate-fade-up mt-6 max-w-xl text-lg italic text-white/85 md:text-xl" style={{ animationDelay: '240ms' }}>
+            {hero.tagline}
+          </p>
+          <div className="animate-fade-up mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '380ms' }}>
+            <Button asChild size="lg" className="rounded-none px-8 uppercase tracking-[0.18em]">
+              <Link href="#portfolio">View the work</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-background">
-                <Link href="#contact">Get In Touch</Link>
+            <Button asChild size="lg" variant="outline" className="rounded-none border-white/80 bg-transparent px-8 uppercase tracking-[0.18em] text-white hover:bg-white hover:text-foreground">
+              <Link href="#contact">Get in touch</Link>
             </Button>
+          </div>
         </div>
       </div>
-       <div className="absolute bottom-10 z-20 text-white">
-          <a href="#about" aria-label="Scroll to about section">
-            <ArrowDown className="h-8 w-8 animate-bounce" />
-          </a>
-       </div>
+      <a href="#about" aria-label="Scroll to about section" className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 text-white">
+        <ArrowDown className="h-6 w-6 animate-bounce" />
+      </a>
     </section>
   );
 }

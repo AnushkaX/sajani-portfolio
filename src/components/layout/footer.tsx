@@ -1,15 +1,15 @@
-import { Wind } from "lucide-react";
+import Link from "next/link";
 
-export default function Footer() {
+export default function Footer({ name }: { name: string }) {
+  const brand = name.split(" ")[0]?.toUpperCase() || "SAJANI";
   return (
     <footer className="border-t">
-      <div className="container flex flex-col md:flex-row items-center justify-between py-6 gap-4">
-        <div className="flex items-center gap-2">
-            <Wind className="h-6 w-6" />
-            <span className="font-bold">Saj's Flow</span>
-        </div>
+      <div className="container flex flex-col items-center justify-between gap-4 py-8 md:flex-row">
+        <Link href="#home" className="font-display text-xl tracking-[0.18em]">
+          {brand}
+        </Link>
         <p className="text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Saj's Flow. All rights reserved.
+          © {new Date().getFullYear()} {name}. All rights reserved.
         </p>
       </div>
     </footer>

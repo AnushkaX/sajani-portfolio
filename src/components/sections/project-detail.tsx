@@ -1,8 +1,8 @@
 "use client";
 
-import Image from 'next/image';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { SafeImage } from '@/components/ui/safe-image';
 import { type Project } from '@/lib/projects';
 
 interface ProjectDetailProps {
@@ -10,32 +10,42 @@ interface ProjectDetailProps {
 }
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
+  const displayImages = project.images.length > 0 ? project.images : [project.coverImage];
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 h-full max-h-full overflow-hidden">
-      <div className="bg-muted flex items-center justify-center p-4 md:p-8">
+    <div className="grid max-h-[92vh] grid-cols-1 overflow-y-auto md:grid-cols-2 md:overflow-hidden">
+      <div className="flex items-center justify-center bg-muted p-6 md:p-10">
         <Carousel className="w-full max-w-md">
           <CarouselContent>
-            {project.images.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="aspect-square relative">
-                  <Image src={image} alt={`${project.title} - Image ${index + 1}`} fill sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw" className="object-contain" />
+            {displayImages.map((image, index) => (
+              <CarouselItem key={`${project.id}-img-${index}`}>
+                <div className="relative aspect-[3/4] bg-background">
+                  <SafeImage
+                    src={image}
+                    alt={`${project.title} — image ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 90vw, 40vw"
+                    className="object-contain"
+                  />
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          {displayImages.length > 1 && (
+            <>
+              <CarouselPrevious />
+              <CarouselNext />
+            </>
+          )}
         </Carousel>
       </div>
-      <div className="relative">
       <ScrollArea className="h-full">
-        <div className="p-8 md:p-12 space-y-6">
-            <h2 className="font-headline text-3xl md:text-4xl text-primary">{project.title}</h2>
-            <p className="text-sm text-muted-foreground font-medium">{project.date}</p>
-            <p className="text-base leading-relaxed">{project.description}</p>
+        <div className="space-y-5 p-8 md:p-12">
+          <p className="text-xs uppercase tracking-[0.28em] text-primary">{project.category}</p>
+          <h2 className="text-4xl tracking-wide">{project.title}</h2>
+          <p className="text-sm text-muted-foreground">{project.date}</p>
+          <p className="text-lg leading-relaxed text-foreground/90">{project.description}</p>
         </div>
-        </ScrollArea>
-      </div>
+      </ScrollArea>
     </div>
   );
 }

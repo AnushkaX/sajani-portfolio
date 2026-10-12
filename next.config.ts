@@ -1,19 +1,12 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
+      { protocol: 'https', hostname: 'placehold.co' },
+      { protocol: 'https', hostname: 'pexels.com' },
+      { protocol: 'https', hostname: 'images.pexels.com' },
+      { protocol: 'https', hostname: '**.supabase.co' },
     ],
   },
 };

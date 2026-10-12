@@ -6,7 +6,6 @@ import { Menu, X, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { BehanceIcon } from '@/components/icons/behance-icon';
-import { siteConfig } from '@/lib/site-config';
 import type { SiteContent } from '@/lib/site-content';
 
 const navLinks = [
@@ -16,7 +15,7 @@ const navLinks = [
   { href: '#contact', label: 'Contact' },
 ];
 
-export default function Header({ social = siteConfig.social }: { social?: SiteContent['social'] }) {
+export default function Header({ social }: { social: SiteContent['social'] }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (

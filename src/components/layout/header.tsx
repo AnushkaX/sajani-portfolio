@@ -19,20 +19,20 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-background/75 backdrop-blur-md">
-      <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
-        <Link href="#home" className="font-display text-2xl tracking-[0.18em]">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
+      <div className="container flex h-20 max-w-wide items-center justify-between">
+        <Link href="#home" className="font-display text-xl tracking-[0.28em]">
           SAJANI
         </Link>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-10 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="group relative text-sm tracking-wide text-foreground/70 transition-colors hover:text-foreground"
+              className="group relative font-sans text-[0.7rem] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-editorial ease-editorial hover:text-foreground"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-2 left-0 h-px w-0 bg-foreground transition-all duration-editorial ease-editorial group-hover:w-full" />
             </Link>
           ))}
         </nav>
@@ -61,10 +61,10 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[80vw]">
+            <SheetContent side="right" className="w-[min(24rem,88vw)] border-l border-foreground/10 bg-background shadow-none">
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between pb-8">
-                  <Link href="#home" className="font-display text-2xl tracking-[0.18em]" onClick={() => setMenuOpen(false)}>
+                  <Link href="#home" className="font-display text-xl tracking-[0.28em]" onClick={() => setMenuOpen(false)}>
                     SAJANI
                   </Link>
                   <Button variant="ghost" size="icon" onClick={() => setMenuOpen(false)}>
@@ -77,7 +77,7 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-2xl tracking-wide transition-colors hover:text-primary"
+                      className="font-display text-4xl tracking-tight transition-colors duration-editorial ease-editorial hover:text-accent"
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}

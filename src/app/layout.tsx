@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Toaster } from "@/components/ui/toaster"
-import { Alegreya, Belleza } from "next/font/google"
+import { Inter, Playfair_Display } from "next/font/google"
 import './globals.css';
 import { cn } from '@/lib/utils';
 
@@ -9,16 +9,14 @@ export const metadata: Metadata = {
   description: 'Portfolio of fashion designer Sajani Muthusinghe.',
 };
 
-const fontDisplay = Belleza({
-  weight: "400",
+const fontDisplay = Playfair_Display({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
 })
 
-const fontSans = Alegreya({
+const fontSans = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  style: ["normal", "italic"],
   variable: "--font-sans",
 })
 

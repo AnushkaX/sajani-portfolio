@@ -1,13 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Briefcase, GraduationCap, Sparkles } from 'lucide-react';
-import { Badge } from '../ui/badge';
+import { Download } from 'lucide-react';
 import { SectionHeading } from './section-heading';
 import type { SiteContent } from '@/lib/site-content';
 
 export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
   return (
-    <section id="resume" className="scroll-mt-24 py-20 md:py-28 lg:py-32">
+    <section id="resume" className="section scroll-mt-24">
       <div className="container">
         <SectionHeading
           eyebrow={resume.eyebrow}
@@ -15,8 +13,8 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
           description={resume.description}
         />
         {resume.cvUrl ? (
-        <div className="mb-12 text-center">
-          <Button asChild className="rounded-none px-8 uppercase tracking-[0.16em]">
+        <div className="mb-20 text-center">
+          <Button asChild className="h-12 rounded-none px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em]">
             <a href={resume.cvUrl} download={resume.cvDownloadName}>
               <Download className="mr-2 h-4 w-4" />
               Download CV
@@ -25,56 +23,39 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
         </div>
         ) : null}
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Card className="reveal-on-scroll border-border/70 shadow-none transition duration-500 hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <GraduationCap className="h-6 w-6 text-primary" />
-                Education
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
+        <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
+          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4">
+            <h3 className="text-3xl">Education</h3>
+            <div className="mt-8 space-y-8">
               {resume.education.map((item) => (
-                <div key={`${item.school}-${item.years}`} className="border-l border-primary/30 pl-4">
-                  <p className="font-medium">{item.degree}</p>
-                  <p className="text-sm text-muted-foreground">{item.school}</p>
+                <div key={`${item.school}-${item.years}`}>
+                  <p className="font-medium tracking-wide">{item.degree}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.school}</p>
                   <p className="text-sm text-muted-foreground">{item.years}</p>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-          <Card className="reveal-on-scroll border-border/70 shadow-none transition duration-500 hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <Briefcase className="h-6 w-6 text-primary" />
-                Experience
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
+            </div>
+          </div>
+          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4 lg:mt-16">
+            <h3 className="text-3xl">Experience</h3>
+            <div className="mt-8 space-y-8">
               {resume.experience.map((item) => (
-                <div key={`${item.company}-${item.duration}`} className="border-l border-primary/30 pl-4">
-                  <p className="font-medium">{item.role}</p>
-                  <p className="text-sm text-muted-foreground">{item.company}</p>
+                <div key={`${item.company}-${item.duration}`}>
+                  <p className="font-medium tracking-wide">{item.role}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.company}</p>
                   <p className="text-sm text-muted-foreground">{item.duration}</p>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-          <Card className="reveal-on-scroll border-border/70 shadow-none transition duration-500 hover:-translate-y-1 hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl">
-                <Sparkles className="h-6 w-6 text-primary" />
-                Skills
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {resume.skills.map((skill) => (
-                  <Badge key={skill} variant="outline" className="rounded-none px-3 py-1 font-normal tracking-wide">{skill}</Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4">
+            <h3 className="text-3xl">Skills</h3>
+            <ul className="mt-8 space-y-3">
+              {resume.skills.map((skill) => (
+                <li key={skill} className="text-sm uppercase tracking-[0.18em] text-muted-foreground">{skill}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

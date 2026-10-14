@@ -13,8 +13,8 @@ interface ProjectDetailProps {
 export function ProjectDetail({ project }: ProjectDetailProps) {
   const displayImages = project.images.length > 0 ? project.images : [project.coverImage];
   return (
-    <div className="grid max-h-[92vh] grid-cols-1 overflow-y-auto md:grid-cols-2 md:overflow-hidden">
-      <div className="flex items-center justify-center bg-muted p-6 md:p-10">
+    <div className="grid max-h-[92vh] grid-cols-1 overflow-y-auto bg-background md:grid-cols-2 md:overflow-hidden">
+      <div className="flex items-center justify-center bg-secondary p-6 md:p-12">
         <Carousel className="w-full max-w-md">
           <CarouselContent>
             {displayImages.map((media, index) => (
@@ -51,11 +51,11 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         </Carousel>
       </div>
       <ScrollArea className="h-full">
-        <div className="space-y-5 p-8 md:p-12">
-          <p className="text-xs uppercase tracking-[0.28em] text-primary">{project.category}</p>
-          <h2 className="text-4xl tracking-wide">{project.title}</h2>
-          <p className="text-sm text-muted-foreground">{project.date}</p>
-          <p className="text-lg leading-relaxed text-foreground/90">{project.description}</p>
+        <div className="space-y-6 p-8 md:p-14">
+          <p className="eyebrow">{project.category}</p>
+          <h2 className="text-4xl md:text-5xl">{project.title}</h2>
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">{project.date}</p>
+          <p className="text-base leading-8 tracking-wide text-foreground/90 md:text-lg">{project.description}</p>
         </div>
       </ScrollArea>
     </div>

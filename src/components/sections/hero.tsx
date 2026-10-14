@@ -52,21 +52,21 @@ export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
           className="animate-kenburns object-cover object-[center_20%]"
         />
       ) : null}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/75 via-black/35 to-black/25" />
-      <div className="relative z-20 w-full px-6 pb-24 sm:px-10 md:px-16">
-        <div className="mx-auto max-w-screen-2xl">
-          <p className="animate-fade-up text-xs uppercase tracking-[0.42em] text-white/80">{hero.eyebrow}</p>
-          <h1 className="animate-fade-up mt-4 max-w-4xl text-5xl leading-[0.95] tracking-wide text-white sm:text-7xl lg:text-8xl" style={{ animationDelay: '120ms' }}>
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/70 via-black/25 to-black/15" />
+      <div className="relative z-20 w-full px-6 pb-28 sm:px-10 md:px-16">
+        <div className="mx-auto max-w-wide">
+          <p className="animate-fade-up font-sans text-[0.7rem] uppercase tracking-[0.42em] text-white/80">{hero.eyebrow}</p>
+          <h1 className="animate-fade-up mt-6 max-w-5xl text-6xl leading-[0.9] text-white sm:text-7xl lg:text-8xl xl:text-9xl" style={{ animationDelay: '120ms' }}>
             {hero.name}
           </h1>
-          <p className="animate-fade-up mt-6 max-w-xl text-lg italic text-white/85 md:text-xl" style={{ animationDelay: '240ms' }}>
+          <p className="animate-fade-up mt-8 max-w-measure font-display text-xl italic leading-snug text-white/85 md:text-2xl" style={{ animationDelay: '240ms' }}>
             {hero.tagline}
           </p>
-          <div className="animate-fade-up mt-8 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '380ms' }}>
-            <Button asChild size="lg" className="rounded-none px-8 uppercase tracking-[0.18em]">
+          <div className="animate-fade-up mt-10 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '380ms' }}>
+            <Button asChild size="lg" className="h-12 rounded-none bg-background px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em] text-foreground hover:bg-background/90">
               <Link href="#portfolio">View the work</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-none border-white/80 bg-transparent px-8 uppercase tracking-[0.18em] text-white hover:bg-white hover:text-foreground">
+            <Button asChild size="lg" variant="outline" className="h-12 rounded-none border-white/70 bg-transparent px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em] text-white hover:bg-white hover:text-foreground">
               <Link href="#contact">Get in touch</Link>
             </Button>
           </div>
@@ -80,7 +80,7 @@ export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
           <button
             type="button"
             onClick={() => setCurrent((index) => (index - 1 + slides.length) % slides.length)}
-            className="grid h-9 w-9 place-items-center border border-white/50 text-white transition hover:bg-white hover:text-foreground"
+            className="grid h-10 w-10 place-items-center border border-white/40 text-white transition duration-editorial ease-editorial hover:bg-white hover:text-foreground"
             aria-label="Previous banner slide"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -100,7 +100,7 @@ export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
           <button
             type="button"
             onClick={() => setPlaying((value) => !value)}
-            className="grid h-9 w-9 place-items-center border border-white/50 text-white transition hover:bg-white hover:text-foreground"
+            className="grid h-10 w-10 place-items-center border border-white/40 text-white transition duration-editorial ease-editorial hover:bg-white hover:text-foreground"
             aria-label={playing ? 'Pause banner carousel' : 'Play banner carousel'}
           >
             {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
@@ -108,7 +108,7 @@ export default function Hero({ hero }: { hero: SiteContent['hero'] }) {
           <button
             type="button"
             onClick={() => setCurrent((index) => (index + 1) % slides.length)}
-            className="grid h-9 w-9 place-items-center border border-white/50 text-white transition hover:bg-white hover:text-foreground"
+            className="grid h-10 w-10 place-items-center border border-white/40 text-white transition duration-editorial ease-editorial hover:bg-white hover:text-foreground"
             aria-label="Next banner slide"
           >
             <ChevronRight className="h-4 w-4" />

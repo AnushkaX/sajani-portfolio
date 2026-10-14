@@ -9,19 +9,49 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1.5rem",
+        md: "2.5rem",
+        lg: "4rem",
+      },
       screens: {
-        "2xl": "1400px",
+        "2xl": "90rem",
       },
     },
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        display: ["var(--font-display)", ...fontFamily.sans],
+        display: ["var(--font-display)", ...fontFamily.serif],
+      },
+      maxWidth: {
+        measure: "var(--measure)",
+        content: "var(--layout-content)",
+        wide: "var(--layout-wide)",
+      },
+      spacing: {
+        section: "var(--space-section)",
+      },
+      transitionDuration: {
+        editorial: "var(--duration-editorial)",
+      },
+      transitionTimingFunction: {
+        editorial: "var(--ease-editorial)",
       },
       colors: {
+        ivory: "#F5F1EA",
+        sand: "#D8CCBD",
+        taupe: "#A99A87",
+        ink: "#171715",
+        stone: "#66615A",
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

@@ -40,28 +40,29 @@ function AdminLoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
-      <div className="w-full max-w-sm space-y-6 rounded-lg border bg-background p-6 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="w-full max-w-sm space-y-8">
         <div>
-          <h1 className="text-2xl font-bold">Admin login</h1>
-          <p className="text-sm text-muted-foreground mt-1">Enter the admin password.</p>
+          <p className="eyebrow">Studio</p>
+          <h1 className="mt-4 text-4xl">Admin login</h1>
+          <p className="mt-3 text-sm tracking-wide text-muted-foreground">Enter the admin password.</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="eyebrow">Password</Label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
               autoFocus
               required
               disabled={loading}
+              className="h-12 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 shadow-none focus-visible:border-foreground focus-visible:ring-0"
             />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="h-12 w-full font-sans text-[0.7rem] uppercase tracking-[0.22em]" disabled={loading}>
             {loading ? 'Signing in…' : 'Sign in'}
           </Button>
         </form>
@@ -76,7 +77,7 @@ function AdminLoginForm() {
 export default function AdminLoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-muted/30">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <p className="text-muted-foreground">Loading…</p>
       </div>
     }>

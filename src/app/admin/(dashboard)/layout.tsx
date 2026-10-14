@@ -10,9 +10,9 @@ export default function AdminDashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-muted/30">
-        <div className="container flex h-14 items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-2 font-semibold">
+      <header className="border-b border-foreground/10">
+        <div className="container flex h-16 items-center justify-between">
+          <Link href="/admin" className="flex items-center gap-2 font-sans text-xs uppercase tracking-[0.28em]">
             <LayoutDashboard className="h-5 w-5" />
             Admin
           </Link>

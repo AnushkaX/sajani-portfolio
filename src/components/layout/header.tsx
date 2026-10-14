@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Instagram, Linkedin } from 'lucide-react';
+import { Menu, X, Instagram, Linkedin, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import type { SiteContent } from '@/lib/site-content';
@@ -14,7 +14,7 @@ const navLinks = [
   { href: '/#contact', label: 'Contact' },
 ];
 
-export default function Header({ social }: { social: SiteContent['social'] }) {
+export default function Header({ social, cv }: { social: SiteContent['social']; cv?: { url: string; name: string } | null }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -34,18 +34,27 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-1 lg:flex">
-          <Button variant="ghost" size="icon" asChild>
-            <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <Instagram className="h-5 w-5" />
-            </a>
-          </Button>
-          <Button variant="ghost" size="icon" asChild>
-            <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <Linkedin className="h-5 w-5" />
-            </a>
-          </Button>
-        </div>
+        <div className="flex items-center gap-1">
+          {cv?.url ? (
+            <Button asChild variant="outline" className="h-10 rounded-none border-foreground/20 bg-transparent px-3 font-sans text-[0.65rem] uppercase tracking-[0.18em] hover:bg-foreground hover:text-background sm:px-4">
+              <a href={cv.url} download={cv.name}>
+                <Download className="h-4 w-4 sm:mr-2" />
+                <span className="sr-only sm:not-sr-only">CV</span>
+              </a>
+            </Button>
+          ) : null}
+          <div className="hidden items-center gap-1 lg:flex">
+            <Button variant="ghost" size="icon" asChild>
+              <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <Instagram className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </Button>
+          </div>
         <div className="md:hidden">
           <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
@@ -66,6 +75,12 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                     <span className="sr-only">Close menu</span>
                   </Button>
                 </div>
+                {cv?.url ? (
+                  <a href={cv.url} download={cv.name} className="mb-6 inline-flex items-center gap-3 font-sans text-[0.7rem] uppercase tracking-[0.22em]" onClick={() => setMenuOpen(false)}>
+                    <Download className="h-4 w-4" />
+                    Download CV
+                  </a>
+                ) : null}
                 <nav className="flex flex-col items-start gap-5" aria-label="Mobile">
                   {navLinks.map((link) => (
                     <Link
@@ -89,6 +104,7 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
               </div>
             </SheetContent>
           </Sheet>
+        </div>
         </div>
       </div>
     </header>

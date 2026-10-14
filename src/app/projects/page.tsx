@@ -33,7 +33,7 @@ export default async function ProjectsPage() {
 
   return (
     <>
-      <Header social={site.social} />
+      <Header social={site.social} cv={site.resume.cvUrl ? { url: site.resume.cvUrl, name: site.resume.cvDownloadName } : null} />
       <main id="content" className="overflow-x-clip pt-20">
         <section className="container pb-16 pt-12 md:pb-20 md:pt-16">
           <div className="reveal-on-scroll mx-auto mb-8 max-w-measure text-center md:mb-10">

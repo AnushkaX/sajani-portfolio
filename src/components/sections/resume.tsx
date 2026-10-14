@@ -15,8 +15,8 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
           title={resume.title}
           description={resume.description}
         />
-        {resume.cvUrl && !resume.cvUrl.endsWith('/placeholder-cv.pdf') ? (
-        <div className="mb-20 text-center">
+        {resume.cvUrl ? (
+        <div className="mb-16 text-center md:mb-20">
           <Button asChild className="h-12 rounded-none px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em]">
             <a href={resume.cvUrl} download={resume.cvDownloadName}>
               <Download className="mr-2 h-4 w-4" />

@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <>
-      <Header social={site.social} />
+      <Header social={site.social} cv={site.resume.cvUrl ? { url: site.resume.cvUrl, name: site.resume.cvDownloadName } : null} />
       <main id="content" className="overflow-x-clip pt-20">
         <CollectionCaseStudy project={project} previous={previous} next={next} />
       </main>

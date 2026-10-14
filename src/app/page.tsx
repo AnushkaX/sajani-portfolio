@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <>
-      <Header social={site.social} />
+      <Header social={site.social} cv={site.resume.cvUrl ? { url: site.resume.cvUrl, name: site.resume.cvDownloadName } : null} />
       <main id="content" className="overflow-x-clip">
         <Hero hero={site.hero} />
         <div className="relative z-10 bg-background">

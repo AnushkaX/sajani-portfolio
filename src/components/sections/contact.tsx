@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
-import { BehanceIcon } from "@/components/icons/behance-icon";
 import { SectionHeading } from "./section-heading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +19,6 @@ export default function Contact({
   const socials = [
     { href: social.instagram, label: "Instagram", icon: Instagram },
     { href: social.linkedin, label: "LinkedIn", icon: Linkedin },
-    { href: social.behance, label: "Behance", icon: BehanceIcon },
   ];
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

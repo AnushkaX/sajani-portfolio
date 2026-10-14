@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Menu, X, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { BehanceIcon } from '@/components/icons/behance-icon';
 import type { SiteContent } from '@/lib/site-content';
 
 const navLinks = [
@@ -44,11 +43,6 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
           <Button variant="ghost" size="icon" asChild>
             <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Linkedin className="h-5 w-5" />
-            </a>
-          </Button>
-          <Button variant="ghost" size="icon" asChild>
-            <a href={social.behance} target="_blank" rel="noopener noreferrer" aria-label="Behance">
-              <BehanceIcon className="h-5 w-5" />
             </a>
           </Button>
         </div>
@@ -90,9 +84,6 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                   </a>
                   <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground transition-colors duration-300 hover:text-primary">
                     <Linkedin className="h-6 w-6" />
-                  </a>
-                  <a href={social.behance} target="_blank" rel="noopener noreferrer" aria-label="Behance" className="text-muted-foreground transition-colors duration-300 hover:text-primary">
-                    <BehanceIcon className="h-6 w-6" />
                   </a>
                 </div>
               </div>

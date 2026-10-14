@@ -211,7 +211,6 @@ export function SiteEditor() {
         <h2 className="text-2xl font-bold">Social links</h2>
         <Field label="Instagram" value={content.social.instagram} onChange={(instagram) => update('social', { instagram })} />
         <Field label="LinkedIn" value={content.social.linkedin} onChange={(linkedin) => update('social', { linkedin })} />
-        <Field label="Behance" value={content.social.behance} onChange={(behance) => update('social', { behance })} />
       </section>
 
       <section className="space-y-4">

@@ -41,7 +41,6 @@ export const siteContentSchema = z.object({
   social: z.object({
     instagram: text(500),
     linkedin: text(500),
-    behance: text(500),
   }),
   contact: z.object({
     eyebrow: text(80),
@@ -96,7 +95,6 @@ export const defaultSiteContent: SiteContent = {
   social: {
     instagram: 'https://instagram.com',
     linkedin: 'https://linkedin.com',
-    behance: 'https://behance.net',
   },
   contact: {
     eyebrow: 'Contact',

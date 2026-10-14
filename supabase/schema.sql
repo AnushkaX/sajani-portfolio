@@ -22,6 +22,7 @@ create table if not exists public.contact_messages (
 );
 
 alter table public.projects add column if not exists deleted_at timestamptz;
+alter table public.projects add column if not exists case_study jsonb not null default '{}'::jsonb;
 
 alter table public.projects drop constraint if exists projects_category_check;
 

@@ -24,7 +24,7 @@ function canOptimize(src: string): boolean {
   }
 }
 
-export function SafeImage({ src, alt, className, fill, ...rest }: SafeImageProps) {
+export function SafeImage({ src, alt, className, fill, priority, sizes, quality, ...rest }: SafeImageProps) {
   const [failed, setFailed] = useState(false);
 
   if (!src || failed) {
@@ -51,6 +51,8 @@ export function SafeImage({ src, alt, className, fill, ...rest }: SafeImageProps
         src={src}
         alt={alt}
         className={cn(fill && 'absolute inset-0 h-full w-full', className)}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
         onError={() => setFailed(true)}
       />
     );
@@ -61,6 +63,9 @@ export function SafeImage({ src, alt, className, fill, ...rest }: SafeImageProps
       src={src}
       alt={alt}
       fill={fill}
+      priority={priority}
+      quality={quality ?? (priority ? 75 : 68)}
+      sizes={sizes ?? (fill ? '100vw' : undefined)}
       className={className}
       onError={() => setFailed(true)}
       {...rest}

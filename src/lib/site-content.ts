@@ -17,6 +17,8 @@ export const siteContentSchema = z.object({
     paragraphOne: text(2000),
     paragraphTwo: text(2000),
     image: text(2000),
+    studyLine: text(200),
+    expertise: z.array(text(80)),
   }),
   resume: z.object({
     eyebrow: text(80),
@@ -60,11 +62,20 @@ export const defaultSiteContent: SiteContent = {
   },
   about: {
     eyebrow: 'About',
-    title: 'A story in every stitch',
-    summary: 'Fashion as wearable art — researched, experimental, and made to last on the person who wears it.',
-    paragraphOne: "I'm Sajani Muthusinghe, a fashion design student with a keen eye for detail and a love for storytelling through textiles. My work sits where classic tailoring meets modern, sustainable practice.",
-    paragraphTwo: 'Each collection starts in research: unconventional materials, careful construction, and silhouettes that feel current without chasing a season. The aim is clothing that carries a feeling, not just a trend.',
+    title: 'Behind the Designs',
+    summary: 'A third-year Fashion Design student at NIBM, exploring a new concept, material, and technique with every project.',
+    paragraphOne: "I'm Sajani Muthusinghe. My work moves between design, styling, and editorial projects, and each one is shaped by its own research and concept rather than a single signature theme.",
+    paragraphTwo: 'In the studio I work hands-on: drafting patterns, constructing garments, and manipulating textiles and surfaces until an idea holds its shape. I am looking for an internship where I can bring that range to a working design team.',
     image: '/images/project1/2.jpg',
+    studyLine: 'Third-year Fashion Design student, NIBM',
+    expertise: [
+      'Garment construction',
+      'Pattern making',
+      'Textile manipulation',
+      'Embroidery and surface design',
+      'Adobe Illustrator and Photoshop',
+      'Concept development and research',
+    ],
   },
   resume: {
     eyebrow: 'Resume',
@@ -106,7 +117,13 @@ export function normalizeSiteContent(input: unknown): SiteContent {
         ? hero.slides
         : [hero.image || defaultSiteContent.hero.slides[0]],
     },
-    about: { ...defaultSiteContent.about, ...source.about },
+    about: {
+      ...defaultSiteContent.about,
+      ...source.about,
+      expertise: (Array.isArray(source.about?.expertise) ? source.about.expertise : defaultSiteContent.about.expertise)
+        .map((item) => item.trim())
+        .filter(Boolean),
+    },
     resume: {
       ...defaultSiteContent.resume,
       ...resume,

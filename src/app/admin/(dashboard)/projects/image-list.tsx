@@ -23,7 +23,7 @@ export function ImageList({
 }: {
   images: string[];
   onChange: (images: string[]) => void;
-  onUseAsCover: (url: string) => void;
+  onUseAsCover?: (url: string) => void;
   allowCover?: boolean;
   emptyLabel?: string;
 }) {
@@ -75,7 +75,7 @@ export function ImageList({
                 <Button type="button" variant="ghost" size="icon" aria-label="Move image down" disabled={index === images.length - 1} onClick={() => onChange(moveItem(images, index, index + 1))}>
                   <ArrowDown className="h-4 w-4" />
                 </Button>
-                {allowCover && !video ? (
+                {allowCover && onUseAsCover && !video ? (
                   <Button type="button" variant="outline" size="sm" onClick={() => onUseAsCover(image)}>
                     Cover
                   </Button>

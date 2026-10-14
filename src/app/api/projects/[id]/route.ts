@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { deleteStoredProject, getStoredProject, setProjectDeleted, updateStoredProject } from '@/lib/projects-store';
+import { deleteStoredProject, getStoredProject, projectMediaUrls, setProjectDeleted, updateStoredProject } from '@/lib/projects-store';
 import { isAdmin } from '@/lib/auth';
 import { projectUpdateSchema } from '@/lib/schemas';
 import { getCategories } from '@/lib/categories-store';
@@ -56,8 +56,8 @@ export async function PUT(
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
     if (previous) {
-      const kept = new Set([project.coverImage, ...project.images]);
-      const removed = [previous.coverImage, ...previous.images].filter((url) => url && !kept.has(url));
+      const kept = new Set(projectMediaUrls(project));
+      const removed = projectMediaUrls(previous).filter((url) => !kept.has(url));
       await deleteUnusedImages(removed);
     }
     return NextResponse.json(project);
@@ -83,7 +83,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Not found' }, { status: 404 });
     }
     if (previous) {
-      await deleteUnusedImages([previous.coverImage, ...previous.images]);
+      await deleteUnusedImages(projectMediaUrls(previous));
     }
     return NextResponse.json({ ok: true });
   } catch (error) {

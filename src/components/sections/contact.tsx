@@ -54,7 +54,7 @@ export default function Contact({
   }
 
   return (
-    <section id="contact" className="section scroll-mt-24 border-t border-foreground/10">
+    <section id="contact" className="section scroll-mt-20 border-t border-foreground/10">
       <div className="container">
         <SectionHeading
           eyebrow={contact.eyebrow}
@@ -64,7 +64,7 @@ export default function Contact({
         <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-12 lg:gap-20">
           <div className="reveal-on-scroll lg:col-span-7">
             {sent ? (
-              <div className="flex min-h-64 flex-col justify-center">
+              <div className="flex min-h-64 flex-col justify-center" role="status">
                 <p className="eyebrow">Sent</p>
                 <h3 className="mt-5 text-4xl">Thank you, {name.split(" ")[0]}.</h3>
                 <p className="mt-4 text-muted-foreground">Your note is saved. I'll reply from the studio.</p>
@@ -74,24 +74,24 @@ export default function Contact({
                 <input type="text" name="company" value={company} onChange={(event) => setCompany(event.target.value)} tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 <div className="space-y-2">
                   <Label htmlFor="name" className="eyebrow">Name</Label>
-                  <Input id="name" value={name} onChange={(event) => setName(event.target.value)} required disabled={loading} className="h-12 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:ring-0 focus-visible:border-foreground" />
+                  <Input id="name" name="name" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} required disabled={loading} aria-invalid={error ? true : undefined} className="h-12 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-4" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email" className="eyebrow">Email</Label>
-                  <Input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required disabled={loading} className="h-12 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:ring-0 focus-visible:border-foreground" />
+                  <Input id="email" name="email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required disabled={loading} aria-invalid={error ? true : undefined} className="h-12 rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-4" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message" className="eyebrow">Message</Label>
-                  <Textarea id="message" rows={5} value={message} onChange={(event) => setMessage(event.target.value)} required disabled={loading} className="rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:ring-0 focus-visible:border-foreground" />
+                  <Textarea id="message" name="message" autoComplete="off" rows={5} value={message} onChange={(event) => setMessage(event.target.value)} required disabled={loading} aria-invalid={error ? true : undefined} className="rounded-none border-0 border-b border-foreground/20 bg-transparent px-0 text-base shadow-none focus-visible:border-foreground focus-visible:ring-1 focus-visible:ring-foreground focus-visible:ring-offset-4" />
                 </div>
-                {error && <p className="text-sm text-destructive">{error}</p>}
+                {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
                 <Button type="submit" className="h-12 rounded-none px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em]" disabled={loading}>
                   {loading ? "Sending…" : "Send message"}
                 </Button>
               </form>
             )}
           </div>
-          <div className="reveal-on-scroll flex flex-col justify-end gap-0 lg:col-span-4 lg:col-start-9">
+          <div className="reveal-on-scroll reveal-delay-1 flex flex-col justify-end gap-0 lg:col-span-4 lg:col-start-9">
             {socials.map(({ href, label, icon: Icon }) => (
               <a
                 key={label}

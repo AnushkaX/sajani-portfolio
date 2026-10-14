@@ -4,15 +4,18 @@ import { SectionHeading } from './section-heading';
 import type { SiteContent } from '@/lib/site-content';
 
 export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
+  const columns = [resume.education, resume.experience, resume.skills].filter((items) => items.length > 0).length;
+  const columnClass = columns > 2 ? 'lg:grid-cols-3' : columns > 1 ? 'lg:grid-cols-2' : '';
+
   return (
-    <section id="resume" className="section scroll-mt-24">
+    <section id="resume" className="section scroll-mt-20">
       <div className="container">
         <SectionHeading
           eyebrow={resume.eyebrow}
           title={resume.title}
           description={resume.description}
         />
-        {resume.cvUrl ? (
+        {resume.cvUrl && !resume.cvUrl.endsWith('/placeholder-cv.pdf') ? (
         <div className="mb-20 text-center">
           <Button asChild className="h-12 rounded-none px-8 font-sans text-[0.7rem] uppercase tracking-[0.22em]">
             <a href={resume.cvUrl} download={resume.cvDownloadName}>
@@ -23,8 +26,9 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
         </div>
         ) : null}
 
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
-          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4">
+        <div className={`grid gap-16 lg:gap-12 ${columnClass}`}>
+          {resume.education.length > 0 ? (
+          <div className="reveal-on-scroll border-t border-foreground/15 pt-8">
             <h3 className="text-3xl">Education</h3>
             <div className="mt-8 space-y-8">
               {resume.education.map((item) => (
@@ -36,7 +40,9 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
               ))}
             </div>
           </div>
-          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4 lg:mt-16">
+          ) : null}
+          {resume.experience.length > 0 ? (
+          <div className="reveal-on-scroll reveal-delay-1 border-t border-foreground/15 pt-8">
             <h3 className="text-3xl">Experience</h3>
             <div className="mt-8 space-y-8">
               {resume.experience.map((item) => (
@@ -48,7 +54,9 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
               ))}
             </div>
           </div>
-          <div className="reveal-on-scroll border-t border-foreground/15 pt-8 lg:col-span-4">
+          ) : null}
+          {resume.skills.length > 0 ? (
+          <div className="reveal-on-scroll reveal-delay-2 border-t border-foreground/15 pt-8">
             <h3 className="text-3xl">Skills</h3>
             <ul className="mt-8 space-y-3">
               {resume.skills.map((skill) => (
@@ -56,6 +64,7 @@ export default function Resume({ resume }: { resume: SiteContent['resume'] }) {
               ))}
             </ul>
           </div>
+          ) : null}
         </div>
       </div>
     </section>

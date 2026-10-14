@@ -4,15 +4,15 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { BehanceIcon } from '@/components/icons/behance-icon';
 import type { SiteContent } from '@/lib/site-content';
 
 const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#portfolio', label: 'Portfolio' },
-  { href: '#resume', label: 'Resume' },
-  { href: '#contact', label: 'Contact' },
+  { href: '/#about', label: 'About' },
+  { href: '/#portfolio', label: 'Portfolio' },
+  { href: '/#resume', label: 'Resume' },
+  { href: '/#contact', label: 'Contact' },
 ];
 
 export default function Header({ social }: { social: SiteContent['social'] }) {
@@ -21,22 +21,21 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-foreground/10 bg-background/80 backdrop-blur-md">
       <div className="container flex h-20 max-w-wide items-center justify-between">
-        <Link href="#home" className="font-display text-xl tracking-[0.28em]">
+        <Link href="/" className="font-display text-xl tracking-[0.28em]">
           SAJANI
         </Link>
-        <nav className="hidden items-center gap-10 md:flex">
+        <nav className="hidden items-center gap-6 lg:gap-10 md:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="group relative font-sans text-[0.7rem] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-editorial ease-editorial hover:text-foreground"
+              className="editorial-link font-sans text-[0.7rem] uppercase tracking-[0.28em] text-muted-foreground transition-colors duration-editorial ease-editorial hover:text-foreground"
             >
               {link.label}
-              <span className="absolute -bottom-2 left-0 h-px w-0 bg-foreground transition-all duration-editorial ease-editorial group-hover:w-full" />
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-1 lg:flex">
           <Button variant="ghost" size="icon" asChild>
             <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <Instagram className="h-5 w-5" />
@@ -61,10 +60,11 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[min(24rem,88vw)] border-l border-foreground/10 bg-background shadow-none">
+            <SheetContent side="right" className="mobile-menu-panel w-[min(24rem,88vw)] border-l border-foreground/10 bg-background shadow-none [&>button:last-child]:hidden" aria-describedby={undefined}>
+              <SheetTitle className="sr-only">Menu</SheetTitle>
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between pb-8">
-                  <Link href="#home" className="font-display text-xl tracking-[0.28em]" onClick={() => setMenuOpen(false)}>
+                  <Link href="/" className="font-display text-xl tracking-[0.28em]" onClick={() => setMenuOpen(false)}>
                     SAJANI
                   </Link>
                   <Button variant="ghost" size="icon" onClick={() => setMenuOpen(false)}>
@@ -72,12 +72,12 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                     <span className="sr-only">Close menu</span>
                   </Button>
                 </div>
-                <nav className="flex flex-col items-start gap-5">
+                <nav className="flex flex-col items-start gap-5" aria-label="Mobile">
                   {navLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="font-display text-4xl tracking-tight transition-colors duration-editorial ease-editorial hover:text-accent"
+                      className="mobile-menu-item editorial-link font-display text-4xl tracking-tight transition-colors duration-editorial ease-editorial hover:text-accent"
                       onClick={() => setMenuOpen(false)}
                     >
                       {link.label}
@@ -85,13 +85,13 @@ export default function Header({ social }: { social: SiteContent['social'] }) {
                   ))}
                 </nav>
                 <div className="mt-auto flex gap-5 pb-4">
-                  <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary">
+                  <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground transition-colors duration-300 hover:text-primary">
                     <Instagram className="h-6 w-6" />
                   </a>
-                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary">
+                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground transition-colors duration-300 hover:text-primary">
                     <Linkedin className="h-6 w-6" />
                   </a>
-                  <a href={social.behance} target="_blank" rel="noopener noreferrer" aria-label="Behance" className="text-muted-foreground hover:text-primary">
+                  <a href={social.behance} target="_blank" rel="noopener noreferrer" aria-label="Behance" className="text-muted-foreground transition-colors duration-300 hover:text-primary">
                     <BehanceIcon className="h-6 w-6" />
                   </a>
                 </div>

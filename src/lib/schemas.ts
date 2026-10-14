@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { caseStudySchema } from "./case-study";
 
 export const projectSchema = z.object({
   id: z.string(),
@@ -8,6 +9,7 @@ export const projectSchema = z.object({
   description: z.string(),
   coverImage: z.string().min(1, "Cover image is required"),
   images: z.array(z.string()),
+  caseStudy: caseStudySchema.optional(),
   deletedAt: z.string().nullable().optional(),
 });
 

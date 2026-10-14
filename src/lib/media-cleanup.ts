@@ -1,6 +1,6 @@
 import { unlink } from 'fs/promises';
 import path from 'path';
-import { getStoredProjects } from './projects-store';
+import { getStoredProjects, projectMediaUrls } from './projects-store';
 import { getSupabaseAdmin, isSupabaseConfigured } from './supabase';
 
 const BUCKET = 'project-images';
@@ -35,8 +35,7 @@ export async function deleteUnusedImages(urls: string[]): Promise<void> {
   const projects = await getStoredProjects({ includeDeleted: true });
   const used = new Set<string>();
   for (const project of projects) {
-    used.add(project.coverImage);
-    for (const image of project.images) used.add(image);
+    for (const url of projectMediaUrls(project)) used.add(url);
   }
 
   const storagePaths: string[] = [];

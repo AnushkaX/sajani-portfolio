@@ -138,6 +138,16 @@ export function SiteEditor() {
         <Field label="Summary" value={content.about.summary} onChange={(summary) => update('about', { summary })} textarea />
         <Field label="First paragraph" value={content.about.paragraphOne} onChange={(paragraphOne) => update('about', { paragraphOne })} textarea />
         <Field label="Second paragraph" value={content.about.paragraphTwo} onChange={(paragraphTwo) => update('about', { paragraphTwo })} textarea />
+        <Field label="Study line" value={content.about.studyLine} onChange={(studyLine) => update('about', { studyLine })} />
+        <div className="space-y-2">
+          <Label>Skills shown in About</Label>
+          <Textarea
+            rows={6}
+            value={content.about.expertise.join('\n')}
+            onChange={(event) => update('about', { expertise: event.target.value.split('\n') })}
+          />
+          <p className="text-xs text-muted-foreground">One skill per line.</p>
+        </div>
         <Field label="Portrait URL" value={content.about.image} onChange={(image) => update('about', { image })} />
         <Input type="file" accept="image/*" aria-label="Upload portrait" disabled={uploading === 'about'} onChange={(event) => onUpload('about', event.target.files?.[0])} />
       </section>

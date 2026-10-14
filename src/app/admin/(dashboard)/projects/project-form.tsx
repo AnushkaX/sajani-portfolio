@@ -22,12 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { mergeCaseStudy } from '@/lib/case-study';
 import { DEFAULT_CATEGORIES } from '@/lib/projects';
 import { projectCreateSchema } from '@/lib/schemas';
 import type { Project } from '@/lib/projects';
 import type { z } from 'zod';
+import { CaseStudyFields } from './case-study-fields';
 import { ImageList } from './image-list';
-import { MEDIA_ACCEPT, uploadMediaFile } from '@/lib/media-upload';
+import { ImageUploader } from './image-uploader';
 
 type ProjectFormValues = z.infer<typeof projectCreateSchema>;
 
@@ -35,48 +37,6 @@ interface ProjectFormProps {
   project?: Project;
   onSubmit: (values: ProjectFormValues) => Promise<void>;
   isEdit?: boolean;
-}
-
-function ImageUploader({
-  label,
-  onUploaded,
-  allowVideo = false,
-}: {
-  label: string;
-  onUploaded: (url: string) => void;
-  allowVideo?: boolean;
-}) {
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState('');
-
-  async function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    event.target.value = '';
-    if (!file) return;
-    setUploading(true);
-    setError('');
-    try {
-      onUploaded(await uploadMediaFile(file));
-    } catch (uploadError) {
-      setError(uploadError instanceof Error ? uploadError.message : 'Upload failed');
-    } finally {
-      setUploading(false);
-    }
-  }
-
-  return (
-    <div className="space-y-1">
-      <Input
-        type="file"
-        accept={allowVideo ? MEDIA_ACCEPT : 'image/*'}
-        aria-label={label}
-        disabled={uploading}
-        onChange={handleFile}
-      />
-      {uploading && <p className="text-xs text-muted-foreground">Uploading…</p>}
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </div>
-  );
 }
 
 export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
@@ -90,6 +50,7 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
           description: project.description,
           coverImage: project.coverImage,
           images: project.images,
+          caseStudy: mergeCaseStudy(project.caseStudy),
         }
       : {
           title: '',
@@ -98,6 +59,7 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
           description: '',
           coverImage: '',
           images: [],
+          caseStudy: mergeCaseStudy(),
         },
   });
 
@@ -182,7 +144,7 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Concept introduction</FormLabel>
               <FormControl>
                 <Textarea placeholder="Project description" rows={4} {...field} />
               </FormControl>
@@ -218,7 +180,8 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
           name="images"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gallery media</FormLabel>
+              <FormLabel>Final collection photographs</FormLabel>
+              <p className="text-xs leading-5 text-muted-foreground">Shown in the Final Collection gallery. The cover image is not repeated there.</p>
               <ImageList
                 images={field.value}
                 onChange={field.onChange}
@@ -232,7 +195,8 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
               <FormMessage />
             </FormItem>
           )}
-        />
+          />
+        <CaseStudyFields />
         {submitError && <p className="text-sm text-destructive">{submitError}</p>}
         <div className="flex gap-4">
           <Button type="submit" disabled={form.formState.isSubmitting}>

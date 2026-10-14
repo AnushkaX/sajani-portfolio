@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import path from 'path';
+import { caseStudyImages, compactCaseStudy, parseCaseStudy } from './case-study';
 import type { Project } from './projects';
 import { projects as fallbackProjects } from './projects';
 import { projectCreateSchema, projectsArraySchema, type ProjectCreateSchema, type ProjectUpdateSchema } from './schemas';
@@ -16,14 +17,20 @@ type ProjectRow = {
   description: string;
   cover_image: string;
   images: string[] | null;
+  case_study?: unknown;
   deleted_at?: string | null;
 };
 
-const PROJECT_COLUMNS = 'id, title, category, date, description, cover_image, images, deleted_at';
+const PROJECT_COLUMNS = 'id, title, category, date, description, cover_image, images, case_study, deleted_at';
+const PROJECT_COLUMNS_WITHOUT_CASE = 'id, title, category, date, description, cover_image, images, deleted_at';
 const PROJECT_COLUMNS_LEGACY = 'id, title, category, date, description, cover_image, images';
 
+function missingColumn(message: string, column: string): boolean {
+  return new RegExp(column, 'i').test(message);
+}
+
 function missingDeletedColumn(message: string): boolean {
-  return /deleted_at/i.test(message);
+  return missingColumn(message, 'deleted_at');
 }
 
 function fromRow(row: ProjectRow): Project {
@@ -35,6 +42,7 @@ function fromRow(row: ProjectRow): Project {
     description: row.description,
     coverImage: row.cover_image,
     images: row.images ?? [],
+    caseStudy: parseCaseStudy(row.case_study),
     deletedAt: row.deleted_at ?? null,
   };
 }
@@ -48,7 +56,12 @@ function toRow(project: Project): ProjectRow {
     description: project.description,
     cover_image: project.coverImage,
     images: project.images,
+    case_study: compactCaseStudy(project.caseStudy) ?? {},
   };
+}
+
+export function projectMediaUrls(project: Pick<Project, 'coverImage' | 'images' | 'caseStudy'>): string[] {
+  return [project.coverImage, ...project.images, ...caseStudyImages(project.caseStudy)].filter(Boolean);
 }
 
 async function readFileProjects(): Promise<Project[]> {
@@ -84,6 +97,13 @@ async function selectProjects(filterId?: string): Promise<Project[]> {
 
   let data = primary.data as ProjectRow[] | null;
   let error = primary.error;
+  if (error && missingColumn(error.message, 'case_study')) {
+    const withoutCase = filterId
+      ? await supabase.from('projects').select(PROJECT_COLUMNS_WITHOUT_CASE).eq('id', filterId)
+      : await supabase.from('projects').select(PROJECT_COLUMNS_WITHOUT_CASE).order('created_at', { ascending: true });
+    data = withoutCase.data as ProjectRow[] | null;
+    error = withoutCase.error;
+  }
   if (error && missingDeletedColumn(error.message)) {
     const legacy = filterId
       ? await supabase.from('projects').select(PROJECT_COLUMNS_LEGACY).eq('id', filterId)
@@ -129,6 +149,15 @@ export async function setProjectDeleted(id: string, deleted: boolean): Promise<P
     .eq('id', id)
     .select(PROJECT_COLUMNS)
     .maybeSingle();
+  if (error && missingColumn(error.message, 'case_study')) {
+    const retry = await supabase.from('projects').update({ deleted_at: deletedAt }).eq('id', id).select(PROJECT_COLUMNS_WITHOUT_CASE).maybeSingle();
+    if (retry.error && missingDeletedColumn(retry.error.message)) {
+      throw new Error('Run supabase/schema.sql again in the Supabase SQL editor so projects can be archived.');
+    }
+    if (retry.error) throw new Error(retry.error.message);
+    if (!retry.data) return null;
+    return fromRow(retry.data as ProjectRow);
+  }
   if (error && missingDeletedColumn(error.message)) {
     throw new Error('Run supabase/schema.sql again in the Supabase SQL editor so projects can be archived.');
   }
@@ -139,7 +168,7 @@ export async function setProjectDeleted(id: string, deleted: boolean): Promise<P
 
 export async function createStoredProject(input: ProjectCreateSchema): Promise<Project> {
   const parsed = projectCreateSchema.parse(input);
-  const project: Project = { ...parsed, id: crypto.randomUUID() };
+  const project: Project = { ...parsed, caseStudy: compactCaseStudy(parsed.caseStudy), id: crypto.randomUUID() };
 
   if (!isSupabaseConfigured()) {
     const projects = await readFileProjects();
@@ -150,8 +179,18 @@ export async function createStoredProject(input: ProjectCreateSchema): Promise<P
 
   const supabase = getSupabaseAdmin();
   if (!supabase) throw new Error('Supabase is not configured');
-  const { error } = await supabase.from('projects').insert(toRow(project));
-  if (error) throw new Error(error.message);
+  const row = toRow(project);
+  const inserted = await supabase.from('projects').insert(row);
+  if (inserted.error && missingColumn(inserted.error.message, 'case_study')) {
+    if (project.caseStudy) {
+      throw new Error('Run supabase/schema.sql again in the Supabase SQL editor so collection case studies can be saved.');
+    }
+    const { case_study: _caseStudy, ...legacyRow } = row;
+    const retry = await supabase.from('projects').insert(legacyRow);
+    if (retry.error) throw new Error(retry.error.message);
+    return project;
+  }
+  if (inserted.error) throw new Error(inserted.error.message);
   return project;
 }
 
@@ -160,7 +199,12 @@ export async function updateStoredProject(id: string, patch: ProjectUpdateSchema
     const projects = await readFileProjects();
     const index = projects.findIndex((project) => project.id === id);
     if (index === -1) return null;
-    projects[index] = { ...projects[index], ...patch, id };
+    projects[index] = {
+      ...projects[index],
+      ...patch,
+      caseStudy: patch.caseStudy !== undefined ? compactCaseStudy(patch.caseStudy) : projects[index].caseStudy,
+      id,
+    };
     await writeFileProjects(projects);
     return projects[index];
   }
@@ -174,6 +218,7 @@ export async function updateStoredProject(id: string, patch: ProjectUpdateSchema
   if (patch.description !== undefined) row.description = patch.description;
   if (patch.coverImage !== undefined) row.cover_image = patch.coverImage;
   if (patch.images !== undefined) row.images = patch.images;
+  if (patch.caseStudy !== undefined) row.case_study = compactCaseStudy(patch.caseStudy) ?? {};
 
   const { data, error } = await supabase
     .from('projects')
@@ -181,6 +226,16 @@ export async function updateStoredProject(id: string, patch: ProjectUpdateSchema
     .eq('id', id)
     .select(PROJECT_COLUMNS)
     .maybeSingle();
+  if (error && missingColumn(error.message, 'case_study')) {
+    if (patch.caseStudy && compactCaseStudy(patch.caseStudy)) {
+      throw new Error('Run supabase/schema.sql again in the Supabase SQL editor so collection case studies can be saved.');
+    }
+    delete row.case_study;
+    const retry = await supabase.from('projects').update(row).eq('id', id).select(PROJECT_COLUMNS_WITHOUT_CASE).maybeSingle();
+    if (retry.error) throw new Error(retry.error.message);
+    if (!retry.data) return null;
+    return fromRow(retry.data as ProjectRow);
+  }
   if (error) throw new Error(error.message);
   if (!data) return null;
   return fromRow(data as ProjectRow);

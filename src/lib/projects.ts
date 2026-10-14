@@ -1,5 +1,7 @@
 export const DEFAULT_CATEGORIES = ['Haute Couture', 'Casual', 'Sketches'] as const;
 
+import type { CaseStudy } from './case-study';
+
 export type Project = {
   id: string;
   title: string;
@@ -8,6 +10,7 @@ export type Project = {
   description: string;
   coverImage: string;
   images: string[];
+  caseStudy?: CaseStudy;
   deletedAt?: string | null;
 };
 

@@ -40,7 +40,7 @@
     --layout-content: 76rem;
     --layout-wide: 90rem;
     --duration-fast: 200ms;
-    --duration-editorial: 700ms;
+    --duration-editorial: 500ms;
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -91,10 +91,18 @@
   * {
     @apply border-border;
   }
+  html {
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground;
     background-color: #F5F1EA;
     color: #171715;
+    overflow-x: clip;
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
   }
   h1, h2, h3 {
     font-family: var(--font-display), Georgia, serif;
@@ -114,10 +122,10 @@
   font-family: var(--font-sans), sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.32em;
-  line-height: 1;
+  letter-spacing: 0.28em;
+  line-height: 1.4;
   text-transform: uppercase;
-  color: hsl(var(--accent));
+  color: #66615A;
 }
 
 @keyframes fade-up {
@@ -148,22 +156,240 @@
   animation: kenburns 22s ease-out both;
 }
 
-.reveal-on-scroll {
-  animation: fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+.motion-ready .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 560ms var(--ease-editorial),
+    transform 560ms var(--ease-editorial);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
-@supports (animation-timeline: view()) {
-  .reveal-on-scroll {
-    animation-timeline: view();
-    animation-range: entry 0% entry 32%;
-    animation-duration: auto;
+.motion-ready .reveal-on-scroll.is-visible,
+.motion-ready .reveal-on-scroll:focus-within {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+.reveal-delay-1 {
+  --reveal-delay: 90ms;
+}
+
+.reveal-delay-2 {
+  --reveal-delay: 180ms;
+}
+
+.motion-ready .reveal-on-scroll .stagger-copy > * {
+  opacity: 0;
+  transform: translateY(0.65rem);
+  transition:
+    opacity 480ms var(--ease-editorial),
+    transform 480ms var(--ease-editorial);
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *,
+.motion-ready .reveal-on-scroll:focus-within .stagger-copy > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *:nth-child(1) {
+  transition-delay: 80ms;
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *:nth-child(2) {
+  transition-delay: 140ms;
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *:nth-child(3) {
+  transition-delay: 200ms;
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *:nth-child(4) {
+  transition-delay: 260ms;
+}
+
+.motion-ready .reveal-on-scroll.is-visible .stagger-copy > *:nth-child(n + 5) {
+  transition-delay: 320ms;
+}
+
+.editorial-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.editorial-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.3rem;
+  left: 0;
+  height: 1px;
+  content: '';
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 420ms var(--ease-editorial);
+}
+
+.editorial-link:hover::after,
+.editorial-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.gallery-frame {
+  transition:
+    background-color 300ms ease,
+    opacity 300ms ease;
+}
+
+.gallery-frame img {
+  transition:
+    transform 500ms var(--ease-editorial),
+    opacity 300ms ease;
+}
+
+.gallery-frame:hover img,
+.gallery-frame:focus-within img {
+  transform: scale(1.018);
+}
+
+.mobile-menu-item {
+  opacity: 0;
+  transform: translateX(0.75rem);
+}
+
+.mobile-menu-panel[data-state='open'] .mobile-menu-item {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 420ms var(--ease-editorial),
+    transform 420ms var(--ease-editorial);
+}
+
+.mobile-menu-panel[data-state='open'] .mobile-menu-item:nth-child(1) {
+  transition-delay: 100ms;
+}
+
+.mobile-menu-panel[data-state='open'] .mobile-menu-item:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.mobile-menu-panel[data-state='open'] .mobile-menu-item:nth-child(3) {
+  transition-delay: 200ms;
+}
+
+.mobile-menu-panel[data-state='open'] .mobile-menu-item:nth-child(4) {
+  transition-delay: 250ms;
+}
+
+@keyframes hero-media {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
+@keyframes hero-line {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-text {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes gallery-in {
+  from {
+    opacity: 0;
+    transform: scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-gallery-in {
+  animation: gallery-in 360ms var(--ease-editorial) both;
+}
+
+.animate-hero-media {
+  animation: hero-media 2.4s var(--ease-editorial) both;
+}
+
+.animate-hero-line {
+  animation: hero-line 1.2s var(--ease-editorial) both;
+}
+
+.animate-hero-text {
+  animation: hero-text 1s var(--ease-editorial) both;
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .animate-fade-up,
   .animate-kenburns,
+  .animate-hero-media,
+  .animate-hero-line,
+  .animate-hero-text,
+  .animate-scroll-cue,
+  .animate-gallery-in,
   .reveal-on-scroll {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .reveal-on-scroll .stagger-copy > *,
+  .gallery-frame,
+  .gallery-frame img,
+  .mobile-menu-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .editorial-link::after {
+    transform: scaleX(0);
+    transition: none;
+  }
+
+  .editorial-link:hover::after,
+  .editorial-link:focus-visible::after {
+    transform: scaleX(1);
   }
 }

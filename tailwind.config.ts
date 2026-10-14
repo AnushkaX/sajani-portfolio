@@ -31,6 +31,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         display: ["var(--font-display)", ...fontFamily.serif],
+        signature: ["var(--font-signature)", "cursive"],
       },
       maxWidth: {
         measure: "var(--measure)",

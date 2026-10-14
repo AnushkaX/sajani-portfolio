@@ -88,9 +88,22 @@ create policy "Public can read projects"
   to anon, authenticated
   using (deleted_at is null);
 
-insert into storage.buckets (id, name, public)
-values ('project-images', 'project-images', true)
-on conflict (id) do update set public = excluded.public;
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'project-images',
+  'project-images',
+  true,
+  104857600,
+  array[
+    'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif',
+    'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime',
+    'application/pdf'
+  ]
+)
+on conflict (id) do update set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists "Public read project images" on storage.objects;
 create policy "Public read project images"

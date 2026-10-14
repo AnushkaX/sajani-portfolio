@@ -38,7 +38,9 @@ npm run seed
 
 The service role key bypasses row level security. Keep it on the server only. Do not prefix it with `NEXT_PUBLIC_`.
 
-Admin image uploads go to the public `project-images` storage bucket. Existing lookbook photos in `public/images` stay in the repo and deploy with the site.
+Admin image, video, and CV uploads go to the public `project-images` storage bucket. Video files are uploaded directly to Supabase with a short-lived signed URL, so they do not pass through Vercel's request-size limit. The supported video formats are MP4, WEBM, OGG, and MOV, with a 100MB limit. Existing lookbook photos in `public/images` stay in the repo and deploy with the site.
+
+The hero banner accepts multiple images and videos under **Admin → Site details**. Project galleries accept the same media from each project editor. Re-run `supabase/schema.sql` after pulling this feature so the storage bucket allows video MIME types and the larger file limit.
 
 ## Vercel
 

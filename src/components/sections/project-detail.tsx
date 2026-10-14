@@ -4,6 +4,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SafeImage } from '@/components/ui/safe-image';
 import { type Project } from '@/lib/projects';
+import { isVideoUrl } from '@/lib/media';
 
 interface ProjectDetailProps {
   project: Project;
@@ -16,16 +17,27 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
       <div className="flex items-center justify-center bg-muted p-6 md:p-10">
         <Carousel className="w-full max-w-md">
           <CarouselContent>
-            {displayImages.map((image, index) => (
+            {displayImages.map((media, index) => (
               <CarouselItem key={`${project.id}-img-${index}`}>
                 <div className="relative aspect-[3/4] bg-background">
-                  <SafeImage
-                    src={image}
-                    alt={`${project.title} — image ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 90vw, 40vw"
-                    className="object-contain"
-                  />
+                  {isVideoUrl(media) ? (
+                    <video
+                      src={media}
+                      className="h-full w-full bg-black object-contain"
+                      controls
+                      playsInline
+                      preload="metadata"
+                      aria-label={`${project.title} — video ${index + 1}`}
+                    />
+                  ) : (
+                    <SafeImage
+                      src={media}
+                      alt={`${project.title} — image ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 90vw, 40vw"
+                      className="object-contain"
+                    />
+                  )}
                 </div>
               </CarouselItem>
             ))}

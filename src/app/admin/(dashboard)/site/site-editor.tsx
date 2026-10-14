@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { SiteContent } from '@/lib/site-content';
+import { ImageList } from '../projects/image-list';
+import { MEDIA_ACCEPT, uploadMediaFile } from '@/lib/media-upload';
 
 function Field({
   label,
@@ -30,7 +32,7 @@ function Field({
   );
 }
 
-async function uploadFile(file: File): Promise<string> {
+async function uploadDocument(file: File): Promise<string> {
   const body = new FormData();
   body.append('file', file);
   const response = await fetch('/api/upload', { method: 'POST', body });
@@ -66,9 +68,9 @@ export function SiteEditor() {
     setUploading(section);
     setError('');
     try {
-      const url = await uploadFile(file);
+      const url = section === 'cv' ? await uploadDocument(file) : await uploadMediaFile(file);
       if (section === 'cv') update('resume', { cvUrl: url, cvDownloadName: file.name || content.resume.cvDownloadName });
-      if (section === 'hero') update('hero', { image: url });
+      if (section === 'hero') update('hero', { slides: [...content.hero.slides, url] });
       if (section === 'about') update('about', { image: url });
     } catch (uploadError) {
       setError(uploadError instanceof Error ? uploadError.message : 'Upload failed');
@@ -109,8 +111,24 @@ export function SiteEditor() {
         <Field label="Eyebrow" value={content.hero.eyebrow} onChange={(eyebrow) => update('hero', { eyebrow })} />
         <Field label="Name" value={content.hero.name} onChange={(name) => update('hero', { name })} />
         <Field label="Tagline" value={content.hero.tagline} onChange={(tagline) => update('hero', { tagline })} textarea />
-        <Field label="Hero image URL" value={content.hero.image} onChange={(image) => update('hero', { image })} />
-        <Input type="file" accept="image/*" aria-label="Upload hero image" disabled={uploading === 'hero'} onChange={(event) => onUpload('hero', event.target.files?.[0])} />
+        <div className="space-y-2">
+          <Label>Banner carousel</Label>
+          <ImageList
+            images={content.hero.slides}
+            onChange={(slides) => update('hero', { slides })}
+            onUseAsCover={() => {}}
+            allowCover={false}
+            emptyLabel="Add at least one banner image or video."
+          />
+        </div>
+        <Input
+          type="file"
+          accept={MEDIA_ACCEPT}
+          aria-label="Upload banner image or video"
+          disabled={uploading === 'hero'}
+          onChange={(event) => onUpload('hero', event.target.files?.[0])}
+        />
+        {uploading === 'hero' && <p className="text-sm text-muted-foreground">Uploading banner media…</p>}
       </section>
 
       <section className="space-y-4">

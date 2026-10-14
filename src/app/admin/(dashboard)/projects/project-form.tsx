@@ -27,6 +27,7 @@ import { projectCreateSchema } from '@/lib/schemas';
 import type { Project } from '@/lib/projects';
 import type { z } from 'zod';
 import { ImageList } from './image-list';
+import { MEDIA_ACCEPT, uploadMediaFile } from '@/lib/media-upload';
 
 type ProjectFormValues = z.infer<typeof projectCreateSchema>;
 
@@ -39,9 +40,11 @@ interface ProjectFormProps {
 function ImageUploader({
   label,
   onUploaded,
+  allowVideo = false,
 }: {
   label: string;
   onUploaded: (url: string) => void;
+  allowVideo?: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -53,17 +56,9 @@ function ImageUploader({
     setUploading(true);
     setError('');
     try {
-      const body = new FormData();
-      body.append('file', file);
-      const response = await fetch('/api/upload', { method: 'POST', body });
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        setError(data.error ?? 'Upload failed');
-        return;
-      }
-      onUploaded(data.url);
-    } catch {
-      setError('Upload failed');
+      onUploaded(await uploadMediaFile(file));
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : 'Upload failed');
     } finally {
       setUploading(false);
     }
@@ -71,7 +66,13 @@ function ImageUploader({
 
   return (
     <div className="space-y-1">
-      <Input type="file" accept="image/*" aria-label={label} disabled={uploading} onChange={handleFile} />
+      <Input
+        type="file"
+        accept={allowVideo ? MEDIA_ACCEPT : 'image/*'}
+        aria-label={label}
+        disabled={uploading}
+        onChange={handleFile}
+      />
       {uploading && <p className="text-xs text-muted-foreground">Uploading…</p>}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
@@ -217,14 +218,15 @@ export function ProjectForm({ project, onSubmit, isEdit }: ProjectFormProps) {
           name="images"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Gallery images</FormLabel>
+              <FormLabel>Gallery media</FormLabel>
               <ImageList
                 images={field.value}
                 onChange={field.onChange}
                 onUseAsCover={(url) => form.setValue('coverImage', url, { shouldValidate: true })}
               />
               <ImageUploader
-                label="Upload gallery image"
+                label="Upload gallery image or video"
+                allowVideo
                 onUploaded={(url) => field.onChange([...field.value, url])}
               />
               <FormMessage />

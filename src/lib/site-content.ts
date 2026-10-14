@@ -7,7 +7,8 @@ export const siteContentSchema = z.object({
     eyebrow: text(80),
     name: text(120),
     tagline: text(400),
-    image: text(2000),
+    image: text(2000).optional(),
+    slides: z.array(text(2000)).min(1),
   }),
   about: z.object({
     eyebrow: text(80),
@@ -55,6 +56,7 @@ export const defaultSiteContent: SiteContent = {
     name: 'Sajani Muthusinghe',
     tagline: 'Narratives cut in cloth — sustainable silhouettes with an avant-garde hand.',
     image: '/images/project1/1.jpg',
+    slides: ['/images/project1/1.jpg'],
   },
   about: {
     eyebrow: 'About',
@@ -94,9 +96,16 @@ export const defaultSiteContent: SiteContent = {
 
 export function normalizeSiteContent(input: unknown): SiteContent {
   const source = input && typeof input === 'object' ? input as Partial<SiteContent> : {};
+  const hero = source.hero ?? defaultSiteContent.hero;
   const resume = source.resume ?? defaultSiteContent.resume;
   return siteContentSchema.parse({
-    hero: { ...defaultSiteContent.hero, ...source.hero },
+    hero: {
+      ...defaultSiteContent.hero,
+      ...hero,
+      slides: Array.isArray(hero.slides) && hero.slides.length > 0
+        ? hero.slides
+        : [hero.image || defaultSiteContent.hero.slides[0]],
+    },
     about: { ...defaultSiteContent.about, ...source.about },
     resume: {
       ...defaultSiteContent.resume,
